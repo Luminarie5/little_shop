@@ -10,7 +10,7 @@ require_relative './lib/film'
 require_relative './lib/book'
 require_relative './lib/disk'
 require_relative './lib/product_collection'
-require_relative './lib/bucket'
+require_relative './lib/cart'
 
 current_path = File.dirname(__FILE__)
 
@@ -18,5 +18,5 @@ collection = ProductCollection.from_dir(current_path)
 collection.sort(:price, :down)
 
 puts 'Что хотите купить:'
-bucket = Bucket.new
+bucket = Cart.new
 bucket.fill(collection)

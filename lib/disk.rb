@@ -12,13 +12,15 @@ class Disk < Product
   end
 
   def to_s
-    "Альбом #{artist} - «#{name}», #{genre}, #{year} год, #{price} руб. (осталось #{count})"
+    "Альбом #{artist} - «#{name}», #{genre}, #{year} год, #{price} руб." \
+        "(осталось #{count})"
   end
 
   def self.from_file(path_to_file)
     hash = {}
+    lines = File.readlines(path_to_file, encoding: 'utf-8').map(&:chomp).compact
     hash[:name], hash[:artist], hash[:genre], hash[:year],
-        hash[:price], hash[:count] = *File.readlines(path_to_file, encoding: 'utf-8').map(&:chomp).compact
+        hash[:price], hash[:count] = *lines
     Disk.new(hash)
   end
 end
