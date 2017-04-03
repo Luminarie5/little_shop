@@ -11,13 +11,15 @@ class Film < Product
   end
 
   def to_s
-    "Фильм «#{name}», #{year} год, реж. #{director}, #{price} руб. (осталось #{count})"
+    "Фильм «#{name}», #{year} год, реж. #{director}, "\
+    "#{price} руб. (осталось #{count})"
   end
 
   def self.from_file(path_to_file)
     hash = {}
-    hash[:director], hash[:name], hash[:year],
-        hash[:price], hash[:count] = *File.readlines(path_to_file, encoding: 'utf-8').map(&:chomp).compact
+    lines = File.readlines(path_to_file, encoding: 'utf-8').map(&:chomp).compact
+    hash[:director], hash[:name], hash[:year], hash[:price],
+        hash[:count] = *lines
     Film.new(hash)
   end
 end

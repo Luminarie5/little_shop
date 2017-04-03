@@ -1,37 +1,32 @@
 # ruby_version: 2.3.3
 # encoding: utf-8
 class ProductCollection
+  attr_reader :products
 
   PRODUCT_CATEGORIES = %w(books films disks).freeze
 
-  def initialize(storage)
-    @storage = storage
+  def initialize(products)
+    @products = products
   end
 
   def self.from_dir(path)
-    storage = []
+    products = []
     PRODUCT_CATEGORIES.each do |category|
-      storage += Dir[path + "/data/#{category}/*.txt"].collect do |file|
+      products += Dir[path + "/data/#{category}/*.txt"].collect do |file|
         Object.const_get(category.chop.capitalize).from_file(file)
       end
     end
-    new(storage)
+    new(products)
   end
 
   def to_a
-    @storage
-  end
-
-  def to_list
-    @storage.each_with_index { |item, index| puts "#{index + 1}. #{item.to_s}" }
-    puts '0. Выход'
-    puts
+    @products
   end
 
   # sort by :price, :count, :name and ascending(:up) descending(:down)
   def sort(type, in_order)
-    @storage.sort_by!(&type)
-    @storage.reverse! if in_order == :down
-    @storage
+    @products.sort_by!(&type)
+    @products.reverse! if in_order == :down
+    @products
   end
 end
